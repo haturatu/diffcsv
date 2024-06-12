@@ -6,7 +6,7 @@ export PATH=$PATH:~/.local/bin
 ```
 git clone
 ```
-git clone git@github.com:haturatu/hikakucsv.git
+git clone https://github.com/haturatu/hikakucsv
 cd hikakucsv
 ```
 # Run
