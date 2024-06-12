@@ -1,7 +1,7 @@
 # hikakucsv
 # Install
 ```
-pip install pandas matplotlib
+pip install pandas matplotlib　streamlit
 export PATH=$PATH:~/.local/bin
 ```
 git clone
