@@ -1,4 +1,4 @@
-# your install fonts check
+# 以下を走らせて使えるフォントを確認する
 ------------------------------------------------------
 import matplotlib.font_manager as fm
 
