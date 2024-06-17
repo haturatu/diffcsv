@@ -3,7 +3,7 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
+import numpy as np
 
 # 日本語フォントの設定
 plt.rcParams['font.family'] = 'Noto Sans CJK JP'
@@ -45,10 +45,21 @@ if uploaded_files:
         axis_position = st.selectbox(f'ファイル{i+1}の縦軸の位置を選択してください', ["左", "右"], index=0, key=f'axis_position_{i}')
 
         # ファイルごとにプロットしたいカラムを選択
-        col = st.selectbox(f'ファイル{i+1}のカラムを選択してください', [col for col in df.columns if col != date_column], key=f'col_select_{i}')
+        col = st.selectbox(f'ファイル{i+1}のカラムを選択してください', [col for col in df.columns if col!= date_column], key=f'col_select_{i}')
 
-        # 凡例名を入力するためのテキストボックスを作成
+        # 凕例名を入力するためのテキストボックスを作成
         legend_name = st.text_input(f'ファイル{i+1}の凡例名を入力してください（デフォルトはカラム名: {col}）', col, key=f'legend_input_{i}')
+
+        # データのスケーリング（必要に応じて）
+        try:
+            df[col] = pd.to_numeric(df[col], errors='coerce')  # 文字列を数値に変換
+            min_val = df[col].min()
+            max_val = df[col].max()
+            range_val = max_val - min_val
+            if range_val < 0:
+                df[col] -= abs(min_val)  # 中心線を0にするためにデータをスケール
+        except ValueError:
+            st.error(f"{col}カラムの値が数値に変換できません。")
 
         # 縦軸の位置に応じてデータフレームをプロット
         if axis_position == "左":
